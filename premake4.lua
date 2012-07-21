@@ -17,5 +17,4 @@ solution "Modules"
 	configuration "linux"
 		defines { "LINUX" }
 	
-	include "sockets"
 	include "toxic"
