@@ -53,7 +53,7 @@ int CFunctions::FileFind(lua_State *luaVM)
 	}
 
 	strPattern = "mods/deathmatch/resources/" + strPattern;
-	g_pModuleManager->Printf("Find %s %u %u\n", strPattern.c_str(), bFiles, bDirs);
+	//g_pModuleManager->Printf("Find %s %u %u\n", strPattern.c_str(), bFiles, bDirs);
 
     lua_newtable(luaVM);
 	unsigned i = 0;
@@ -66,7 +66,7 @@ int CFunctions::FileFind(lua_State *luaVM)
 		if(iRet < 0)
 			break;
 
-		g_pModuleManager->Printf("Found %s\n", strName.c_str());
+		//g_pModuleManager->Printf("Found %s\n", strName.c_str());
 		if((iRet == 0 && bFiles) || (iRet == 1 && bDirs))
 		{
 			lua_pushinteger(luaVM, i + 1);
@@ -83,12 +83,4 @@ int CFunctions::FileIsDirectory(lua_State *luaVM)
 {
 	lua_pushboolean(luaVM, false);
     return 1;
-}
-
-void CFunctions::AddEvent(lua_State *luaVM, const string& strEventName)
-{
-    CLuaArguments args;
-    args.PushString(strEventName.c_str());
-    args.PushBoolean(true);
-    args.Call(luaVM, "addEvent");
 }

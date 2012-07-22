@@ -34,7 +34,5 @@ class CFunctions
     public:
         static int FileFind(lua_State* luaVM);
 		static int FileIsDirectory(lua_State* luaVM);
-        
-        static void AddEvent(lua_State* luaVM, const std::string& strEventName);
 };
 #endif
