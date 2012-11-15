@@ -34,5 +34,6 @@ class CFunctions
     public:
         static int FileFind(lua_State* luaVM);
 		static int FileIsDirectory(lua_State* luaVM);
+		static int CompressJSON(lua_State* luaVM);
 };
 #endif

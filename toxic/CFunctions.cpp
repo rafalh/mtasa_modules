@@ -67,7 +67,7 @@ int CFunctions::FileFind(lua_State *luaVM)
 			break;
 
 		//g_pModuleManager->Printf("Found %s\n", strName.c_str());
-		if((iRet == 0 && bFiles) || (iRet == 1 && bDirs))
+		if((iRet == CFileList::FILE && bFiles) || (iRet == CFileList::DIR && bDirs))
 		{
 			lua_pushinteger(luaVM, i + 1);
 			lua_pushstring(luaVM, strName.c_str());
@@ -82,5 +82,51 @@ int CFunctions::FileFind(lua_State *luaVM)
 int CFunctions::FileIsDirectory(lua_State *luaVM)
 {
 	lua_pushboolean(luaVM, false);
+    return 1;
+}
+
+int CFunctions::CompressJSON(lua_State* luaVM)
+{
+    if(!luaVM)
+        return 0;
+    
+    size_t cbData;
+    const char *pszData = lua_tolstring(luaVM, 1, &cbData);
+    if(!pszData)
+    {
+        lua_pushboolean(luaVM, false);
+        g_pModuleManager->ErrorPrintf("Invalid JSON data\n");
+        return 1;
+    }
+    
+	bool bStr = false, bSlash = false;
+	string strRet = "";
+	strRet.reserve(cbData);
+	
+	for(unsigned i = 0; i < cbData; ++i)
+	{
+	    char ch = pszData[i];
+	    switch(ch)
+	    {
+	        case ' ':
+                if(bStr || bSlash)
+                    strRet += ch;
+                bSlash = false;
+                break;
+            case '"':
+                strRet += ch;
+                bStr = !bStr;
+                bSlash = false;
+                break;
+            case '\\':
+                strRet += ch;
+                bSlash = !bSlash;
+                break;
+            default:
+                strRet += ch;
+	    }
+	}
+    
+    lua_pushstring(luaVM, strRet.c_str());
     return 1;
 }

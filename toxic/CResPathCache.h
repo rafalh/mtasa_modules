@@ -15,7 +15,7 @@ class CResPathCache
     private:
         std::map<std::string, std::string> m_List;
         
-        bool CResPathCache::Find(const std::string &strResName, std::string &strRet, const std::string &strPath = "");
+        bool Find(const std::string &strResName, std::string &strRet, const std::string &strPath = "");
 };
 
 #endif // CRESPATHCACHE_H

@@ -18,3 +18,4 @@ solution "Modules"
 		defines { "LINUX" }
 	
 	include "toxic"
+	include "sockets"

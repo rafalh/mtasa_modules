@@ -24,6 +24,12 @@ extern "C"
 }
 #include <string>
 
+#if defined(WIN32) && defined(__GNUC__)
+#define THISCALL __thiscall // MTA uses on Windows MS standard for calling methods
+#else
+#define THISCALL
+#endif
+
 #ifndef __CChecksum_H
 class CChecksum
 {
@@ -37,27 +43,27 @@ public:
 class ILuaModuleManager
 {
 public:
-	virtual void                ErrorPrintf             ( const char* szFormat, ... ) = 0;
-	virtual void                DebugPrintf             ( lua_State * luaVM, const char* szFormat, ... ) = 0;
-	virtual void                Printf                  ( const char* szFormat, ... ) = 0;
+	virtual void                      ErrorPrintf             ( const char* szFormat, ... ) = 0;
+	virtual void                      DebugPrintf             ( lua_State * luaVM, const char* szFormat, ... ) = 0;
+	virtual void                      Printf                  ( const char* szFormat, ... ) = 0;
 
-	virtual bool                RegisterFunction        ( lua_State * luaVM, const char *szFunctionName, lua_CFunction Func ) = 0;
-    virtual bool                GetResourceName         ( lua_State * luaVM, std::string &strName ) = 0;
-	virtual CChecksum           GetResourceMetaChecksum ( lua_State * luaVM ) = 0;
-	virtual CChecksum           GetResourceFileChecksum ( lua_State * luaVM, const char* szFile ) = 0;
+	virtual bool __thiscall           RegisterFunction        ( lua_State * luaVM, const char *szFunctionName, lua_CFunction Func ) = 0;
+    virtual bool __thiscall           GetResourceName         ( lua_State * luaVM, std::string &strName ) = 0;
+	virtual CChecksum __thiscall      GetResourceMetaChecksum ( lua_State * luaVM ) = 0;
+	virtual CChecksum __thiscall      GetResourceFileChecksum ( lua_State * luaVM, const char* szFile ) = 0;
 };
 
 /* Interface for modules until 1.0 */
 class ILuaModuleManager10 : public ILuaModuleManager
 {
 public:
-    virtual unsigned long       GetVersion              ( ) = 0;
-    virtual const char*         GetVersionString        ( ) = 0;
-    virtual const char*         GetVersionName          ( ) = 0;
-    virtual unsigned long       GetNetcodeVersion       ( ) = 0;
-    virtual const char*         GetOperatingSystemName  ( ) = 0;
+    virtual unsigned long __thiscall  GetVersion              ( ) = 0;
+    virtual const char* __thiscall    GetVersionString        ( ) = 0;
+    virtual const char* __thiscall    GetVersionName          ( ) = 0;
+    virtual unsigned long __thiscall  GetNetcodeVersion       ( ) = 0;
+    virtual const char* __thiscall    GetOperatingSystemName  ( ) = 0;
 
-    virtual lua_State*          GetResourceFromName     ( const char* szResourceName ) = 0;
+    virtual lua_State* __thiscall     GetResourceFromName     ( const char* szResourceName ) = 0;
 };
 
 #endif

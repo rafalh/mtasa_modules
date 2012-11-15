@@ -43,6 +43,7 @@ MTAEXPORT void RegisterFunctions(lua_State *luaVM)
     {
         g_pModuleManager->RegisterFunction(luaVM, "fileFind", CFunctions::FileFind);
 		g_pModuleManager->RegisterFunction(luaVM, "fileIsDirectory", CFunctions::FileIsDirectory);
+		g_pModuleManager->RegisterFunction(luaVM, "compressJSON", CFunctions::CompressJSON);
     }
 }
 
