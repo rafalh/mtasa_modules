@@ -17,7 +17,7 @@
 *********************************************************/
 
 #include "module.h"
-#include "luaimports.h"
+#include "luaimports/luaimports.h"
 
 ILuaModuleManager10 *g_pModuleManager = NULL;
 

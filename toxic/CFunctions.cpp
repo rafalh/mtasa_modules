@@ -17,7 +17,7 @@
 *********************************************************/
 
 #include "CFunctions.h"
-#include "CLuaArguments.h"
+#include "extra/CLuaArguments.h"
 #include "CFileList.h"
 #include "CResPathCache.h"
 

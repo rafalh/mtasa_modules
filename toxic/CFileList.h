@@ -11,7 +11,7 @@
 #ifndef CFILELIST_H
 #define CFILELIST_H
 
-#if !LINUX
+#if WIN32
 
 #include <windows.h>
 
@@ -69,6 +69,11 @@ class CFileList
 class CFileList
 {
     public:
+		 enum
+        {
+            FILE = 0,
+            DIR = 1,
+        };
         inline CFileList(const char *pPattern)
         {
             glob(pPattern, GLOB_MARK, NULL, &m_GlobBuf);
