@@ -57,7 +57,7 @@ int CFunctions::FileFind(lua_State *luaVM)
     lua_newtable(luaVM);
 	unsigned i = 0;
 
-	CFileList List(strPattern.c_str());
+	CFileList List(strPattern);
 	while(true)
 	{
 		string strName;
@@ -80,6 +80,9 @@ int CFunctions::FileFind(lua_State *luaVM)
 
 int CFunctions::FileIsDirectory(lua_State *luaVM)
 {
+    if(!luaVM)
+        return 0;
+    
 	lua_pushboolean(luaVM, false);
     return 1;
 }

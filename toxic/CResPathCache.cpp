@@ -14,7 +14,7 @@ bool CResPathCache::GetResPath(const string &strResName, string &strRet)
         strRet = it->second;
 		return true;
 	}
-    
+
     if(!Find(strResName, strRet))
 		return false;
 
@@ -89,8 +89,9 @@ bool CResPathCache::GetThisResourceName(lua_State* luaVM, string &strRet)
 bool CResPathCache::Find(const string &strResName, string &strRet, const string &strPath)
 {
     string strPattern = string("mods/deathmatch/resources/") + strPath + "*";
-	//g_pModuleManager->Printf("Find %s\n", strPattern.c_str());
-    CFileList List(strPattern.c_str());
+    
+	//g_pModuleManager->Printf("Find(%s): %s\n", strResName.c_str(), strPattern.c_str());
+    CFileList List(strPattern);
     while(true)
 	{
 		string strName;
@@ -98,8 +99,8 @@ bool CResPathCache::Find(const string &strResName, string &strRet, const string 
 		if(iRet < 0)
 			break;
 		
-        //g_pModuleManager->Printf("Found %s\n", strName.c_str());
-        if(iRet == 1 && strName == strResName)
+        //g_pModuleManager->Printf("Found %s (%d)\n", strName.c_str(), iRet);
+        if(iRet == CFileList::DIR && strName == strResName)
 		{
 			strRet = strPath;
             return true;

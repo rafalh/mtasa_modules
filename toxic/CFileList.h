@@ -11,6 +11,8 @@
 #ifndef CFILELIST_H
 #define CFILELIST_H
 
+#include <string>
+
 #if WIN32
 
 #include <windows.h>
@@ -24,9 +26,9 @@ class CFileList
             DIR = 1,
         };
         
-        inline CFileList(const char *pPattern)
+        inline CFileList(const std::string &strPattern)
         {
-            m_hFind = FindFirstFileA(pPattern, &m_Wfd);
+            m_hFind = FindFirstFileA(strPattern.c_str(), &m_Wfd);
         }
 
         inline ~CFileList()
@@ -64,6 +66,7 @@ class CFileList
 };
 
 #else // LINUX
+
 #include <glob.h>
 
 class CFileList
@@ -74,9 +77,20 @@ class CFileList
             FILE = 0,
             DIR = 1,
         };
-        inline CFileList(const char *pPattern)
+        inline CFileList(const std::string &strPattern)
         {
-            glob(pPattern, GLOB_MARK, NULL, &m_GlobBuf);
+            // Escape special characters in pattern (except *)
+            std::string strEscapedPattern;
+            strEscapedPattern.reserve(strPattern.size());
+            for(unsigned i = 0; i < strPattern.size(); ++i)
+            {
+                if(strPattern[i] == '[' || strPattern[i] == ']' || strPattern[i] == '\\' || strPattern[i] == '?')
+                    strEscapedPattern += '\\';
+                
+                strEscapedPattern += strPattern[i];
+            }
+            
+            glob(strEscapedPattern.c_str(), GLOB_MARK, NULL, &m_GlobBuf);
             m_nCurrentPath = 0;
         }
 
@@ -95,18 +109,20 @@ class CFileList
                 if(m_nCurrentPath >= m_GlobBuf.gl_pathc)
                     return -1;
 
-                const char *pszFilename = m_GlobBuf.gl_pathv[m_nCurrentPath];
-                if(pszFilename[0] == '/')
+                const char *pszPath = m_GlobBuf.gl_pathv[m_nCurrentPath++];
+                strName = pszPath;
+                if(!strName.empty() && strName[strName.size() - 1] == '/')
                 {
-                    strName = pszFilename + 1;
-                    iRet = DIR;
-                }
-                else
-                {
-                    strName = pszFilename;
-                    iRet = FILE;
-                }
-            } while(strName == "." || strName == "..");
+                     iRet = DIR;
+                     strName.resize(strName.size() - 1);
+                } else
+                     iRet = FILE;
+                
+                size_t SlashPos = strName.rfind('/');
+                if(SlashPos != std::string::npos)
+                    strName.erase(0, SlashPos + 1); // +1 for slash
+            }
+            while(strName == "." || strName == "..");
 
             return iRet;
         }
