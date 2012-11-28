@@ -11,6 +11,7 @@ project "ml_toxic"
 	links { "lua5.1" }
 	includedirs { ".", "include", "extra", "luaimports" }
 	targetprefix ""
+	targetdir "bin"
 	
 	configuration "windows"
 		links { "ws2_32" }
