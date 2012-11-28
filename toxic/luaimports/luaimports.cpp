@@ -29,7 +29,7 @@
  */
 #include <dlfcn.h>
 #include <stdarg.h>
-#include "common.h"
+#include "module.h"
 #include "ILuaModuleManager.h"
 #include "lauxlib.h"
 #include "luaconf.h"
@@ -37,8 +37,6 @@
 #include "lualib.h"
 
 /* This file extracts the lua function addresses from the server core to avoid lua gc crashes */
-
-extern ILuaModuleManager* pModuleManager;
 
 /*
  ** state manipulation
@@ -208,7 +206,7 @@ static void* pluaL_pushresult = 0;
   p ## x = dlsym(dl, #x); \
   if (p ## x == 0) \
   { \
-    pModuleManager->Printf("Unable to import " #x ": %s\n", dlerror()); \
+    g_pModuleManager->Printf("Unable to import " #x ": %s\n", dlerror()); \
     return; \
   }
 
@@ -220,7 +218,7 @@ void ImportLua()
   void* dl = dlopen("mods/deathmatch/deathmatch.so", RTLD_NOW | RTLD_NOLOAD);
   if (!dl)
   {
-    pModuleManager->Printf("Unable to open deathmatch.so: %s\n", dlerror());
+    g_pModuleManager->Printf("Unable to open deathmatch.so: %s\n", dlerror());
     return;
   }
 

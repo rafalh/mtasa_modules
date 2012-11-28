@@ -4,12 +4,16 @@ project "ml_toxic"
 	files {
 		"*.cpp", "*.h",
 		"luaimports/*.h",
-		"extra/*.cpp", "extra/*.h",
+		--"extra/*.cpp", "extra/*.h",
 		"include/*.h",
 	}
 	libdirs { "lib" }
 	links { "lua5.1" }
 	includedirs { ".", "include", "extra", "luaimports" }
+	targetprefix ""
 	
 	configuration "windows"
 		links { "ws2_32" }
+	
+	configuration "linux"
+		files { "luaimports/*.cpp" }

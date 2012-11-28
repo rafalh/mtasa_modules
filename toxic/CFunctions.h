@@ -25,9 +25,9 @@ class CFunctions;
 #include <string>
 
 #include "module.h"
-#include "include/ILuaModuleManager.h"
+#include "ILuaModuleManager.h"
 
-extern ILuaModuleManager10 *pModuleManager;
+extern ILuaModuleManager10 *g_pModuleManager;
 
 class CFunctions
 {

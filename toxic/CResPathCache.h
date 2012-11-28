@@ -3,7 +3,7 @@
 
 #include <string>
 #include <map>
-#include "include/ILuaModuleManager.h"
+#include "ILuaModuleManager.h"
 
 class CResPathCache
 {

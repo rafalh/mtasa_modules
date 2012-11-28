@@ -1,7 +1,6 @@
 #include "CResPathCache.h"
 #include "CFileList.h"
 #include "module.h"
-#include "extra/CLuaArguments.h"
 
 extern ILuaModuleManager10 *g_pModuleManager;
 
