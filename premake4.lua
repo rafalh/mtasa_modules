@@ -19,3 +19,4 @@ solution "Modules"
 	
 	include "toxic"
 	include "sockets"
+	include "vendor/zlib"

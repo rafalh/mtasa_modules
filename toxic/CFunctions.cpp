@@ -19,6 +19,8 @@
 #include "CFunctions.h"
 #include "CFileList.h"
 #include "CResPathCache.h"
+#include "zlib/zlib.h"
+#include <stdint.h>
 
 using namespace std;
 
@@ -130,5 +132,62 @@ int CFunctions::CompressJSON(lua_State* luaVM)
 	}
     
     lua_pushstring(luaVM, strRet.c_str());
+    return 1;
+}
+
+int CFunctions::zlibCompress(lua_State* luaVM)
+{
+    if(!luaVM)
+        return 0;
+    
+    size_t cbInput;
+    const char *pInput = lua_tolstring(luaVM, 1, &cbInput);
+    if(!pInput)
+    {
+        lua_pushboolean(luaVM, false);
+        g_pModuleManager->ErrorPrintf("Invalid zlibCompress data\n");
+        return 1;
+    }
+    
+    uLongf cbOutput = compressBound(cbInput);
+    char *pOutput = new char[cbOutput + 4];
+    *((uint32_t*)pOutput) = cbInput; // save length at the beggining
+    if(compress((Bytef*)pOutput + 4, &cbOutput, (Bytef*)pInput, cbInput) != Z_OK)
+    {
+        delete[] pOutput;
+        lua_pushboolean(luaVM, false);
+        g_pModuleManager->ErrorPrintf("compress failed\n");
+        return 1;
+    }
+    lua_pushlstring(luaVM, pOutput, cbOutput + 4);
+    delete[] pOutput;
+    return 1;
+}
+
+int CFunctions::zlibUncompress(lua_State* luaVM)
+{
+    if(!luaVM)
+        return 0;
+    
+    size_t cbInput;
+    const char *pInput = lua_tolstring(luaVM, 1, &cbInput);
+    if(!pInput || cbInput < 4)
+    {
+        lua_pushboolean(luaVM, false);
+        g_pModuleManager->ErrorPrintf("Invalid zlibDecompress data\n");
+        return 1;
+    }
+    
+    uLongf cbOutput = *((uint32_t*)pInput);
+    char *pOutput = new char[cbOutput];
+    if(uncompress((Bytef*)pOutput, &cbOutput, (Bytef*)pInput + 4, cbInput - 4) != Z_OK)
+    {
+        delete[] pOutput;
+        lua_pushboolean(luaVM, false);
+        g_pModuleManager->ErrorPrintf("uncompress failed\n");
+        return 1;
+    }
+    lua_pushlstring(luaVM, pOutput, cbOutput);
+    delete[] pOutput;
     return 1;
 }

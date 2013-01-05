@@ -39,12 +39,13 @@ MTAEXPORT bool InitModule(ILuaModuleManager10 *pManager, char *szModuleName, cha
 
 MTAEXPORT void RegisterFunctions(lua_State *luaVM)
 {
-    if(g_pModuleManager && luaVM)
-    {
-        g_pModuleManager->RegisterFunction(luaVM, "fileFind", CFunctions::FileFind);
-		g_pModuleManager->RegisterFunction(luaVM, "fileIsDirectory", CFunctions::FileIsDirectory);
-		g_pModuleManager->RegisterFunction(luaVM, "compressJSON", CFunctions::CompressJSON);
-    }
+    if(!g_pModuleManager || !luaVM) return;
+    
+    g_pModuleManager->RegisterFunction(luaVM, "fileFind", CFunctions::FileFind);
+    g_pModuleManager->RegisterFunction(luaVM, "fileIsDirectory", CFunctions::FileIsDirectory);
+    g_pModuleManager->RegisterFunction(luaVM, "compressJSON", CFunctions::CompressJSON);
+    g_pModuleManager->RegisterFunction(luaVM, "zlibCompress", CFunctions::zlibCompress);
+    g_pModuleManager->RegisterFunction(luaVM, "zlibUncompress", CFunctions::zlibUncompress);
 }
 
 

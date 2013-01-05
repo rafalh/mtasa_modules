@@ -8,8 +8,8 @@ project "ml_toxic"
 		"include/*.h",
 	}
 	libdirs { "lib" }
-	links { "lua5.1" }
-	includedirs { ".", "include", "extra", "luaimports" }
+	links { "lua5.1", "zlib" }
+	includedirs { ".", "include", "extra", "luaimports", "../vendor" }
 	targetprefix ""
 	targetdir "bin"
 	

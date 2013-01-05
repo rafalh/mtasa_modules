@@ -35,5 +35,7 @@ class CFunctions
         static int FileFind(lua_State* luaVM);
 		static int FileIsDirectory(lua_State* luaVM);
 		static int CompressJSON(lua_State* luaVM);
+		static int zlibCompress(lua_State* luaVM);
+		static int zlibUncompress(lua_State* luaVM);
 };
 #endif
