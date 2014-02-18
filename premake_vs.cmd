@@ -1,5 +1,5 @@
 @echo off
 call config.cmd
 
-%PREMAKE4% vs2010
+%PREMAKE4% vs2012
 pause

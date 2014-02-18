@@ -8,13 +8,13 @@ project "ml_toxic"
 		"include/*.h",
 	}
 	libdirs { "lib" }
-	links { "lua5.1", "zlib" }
+	links { "zlib" }
 	includedirs { ".", "include", "extra", "luaimports", "../vendor" }
 	targetprefix ""
 	targetdir "bin"
 	
 	configuration "windows"
-		links { "ws2_32" }
+		links { "lua5.1", "ws2_32" }
 	
 	configuration "linux"
 		files { "luaimports/*.cpp" }

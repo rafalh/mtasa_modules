@@ -152,7 +152,7 @@ int CFunctions::zlibCompress(lua_State* luaVM)
     uLongf cbOutput = compressBound(cbInput);
     char *pOutput = new char[cbOutput + 4];
     *((uint32_t*)pOutput) = cbInput; // save length at the beggining
-    if(compress((Bytef*)pOutput + 4, &cbOutput, (Bytef*)pInput, cbInput) != Z_OK)
+    if(compress2((Bytef*)pOutput + 4, &cbOutput, (Bytef*)pInput, cbInput, Z_BEST_COMPRESSION) != Z_OK)
     {
         delete[] pOutput;
         lua_pushboolean(luaVM, false);
