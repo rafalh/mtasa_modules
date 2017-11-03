@@ -21,7 +21,7 @@
 
 extern "C"
 {
-    #include "../include/lua.h"
+    #include <lua.h>
 }
 
 #include "CLuaArgument.h"
@@ -47,7 +47,6 @@ public:
     CLuaArgument*                                       PushBoolean         ( bool bBool );
     CLuaArgument*                                       PushNumber          ( double dNumber );
     CLuaArgument*                                       PushString          ( const char* szString );
-	CLuaArgument*                                       PushString          ( const std::string &strString );
     CLuaArgument*                                       PushUserData        ( void* pUserData );
 
     void                                                DeleteArguments     ( void );

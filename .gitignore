@@ -1,0 +1,12 @@
+dist
+bin
+obj
+Makefile
+
+*.a
+*.lib
+
+# CodeBlocks
+*.cbd
+*.layout
+*.depend

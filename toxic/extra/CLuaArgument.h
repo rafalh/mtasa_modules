@@ -21,10 +21,8 @@
 
 extern "C"
 {
-    #include "../include/lua.h"
+    #include <lua.h>
 }
-
-#include <string>
 
 class CLuaArgument
 {
@@ -33,7 +31,6 @@ public:
                             CLuaArgument        ( bool bBool );
                             CLuaArgument        ( double dNumber );
                             CLuaArgument        ( const char* szString );
-							CLuaArgument        ( const std::string &strString );
                             CLuaArgument        ( void* pUserData );
                             CLuaArgument        ( const CLuaArgument& Argument );
                             CLuaArgument        ( lua_State* luaVM, unsigned int uiArgument );
@@ -50,14 +47,14 @@ public:
 
     inline bool             GetBoolean          ( void ) const      { return m_bBoolean; };
     inline lua_Number       GetNumber           ( void ) const      { return m_Number; };
-    inline const char*      GetString           ( void ) const      { return m_strString.c_str(); };
+    inline const char*      GetString           ( void ) const      { return m_szString; };
     inline void*            GetLightUserData    ( void ) const      { return m_pLightUserData; };
 
 private:
     int                     m_iType;
     bool                    m_bBoolean;
     lua_Number              m_Number;
-    std::string             m_strString;
+    char*                   m_szString;
     void*                   m_pLightUserData;
 };
 

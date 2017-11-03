@@ -102,7 +102,7 @@ bool CLuaArguments::Call ( lua_State* luaVM, const char* szFunction ) const
     int iret = lua_pcall ( luaVM, m_Arguments.size (), 0, 0 ) ;
     if ( iret == LUA_ERRRUN || iret == LUA_ERRMEM )
     {
-        //const char* szRes = lua_tostring( luaVM, -1 );
+        const char* szRes = lua_tostring( luaVM, -1 );
         return false; // the function call failed
     }
         
@@ -137,14 +137,6 @@ CLuaArgument* CLuaArguments::PushNumber ( double dNumber )
 CLuaArgument* CLuaArguments::PushString ( const char* szString )
 {
     CLuaArgument* pArgument = new CLuaArgument ( szString );
-    m_Arguments.push_back ( pArgument );
-    return pArgument;
-}
-
-
-CLuaArgument* CLuaArguments::PushString ( const std::string &strString )
-{
-    CLuaArgument* pArgument = new CLuaArgument ( strString );
     m_Arguments.push_back ( pArgument );
     return pArgument;
 }

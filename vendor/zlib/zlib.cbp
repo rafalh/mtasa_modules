@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="zlib" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="lib/libzlib.a" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Debug" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WINDOWS" />
+				</Compiler>
+				<Linker>
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="lib/libzlib.a" prefix_auto="0" extension_auto="0" />
+				<Option object_output="obj/Release" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-D_CRT_SECURE_NO_WARNINGS" />
+					<Add option="-D_USRDLL" />
+					<Add option="-DNDEBUG" />
+					<Add option="-DWIN32" />
+					<Add option="-D_WINDOWS" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="adler32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="compress.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="crc32.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="deflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gzclose.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gzlib.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gzread.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gzwrite.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="infback.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="inffast.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="inflate.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="inftrees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="trees.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="uncompr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="zutil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
+

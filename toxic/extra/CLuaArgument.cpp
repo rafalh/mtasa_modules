@@ -16,10 +16,6 @@
 *
 *********************************************************/
 
-#ifdef _MSC_VER
-    #pragma warning (disable : 4996) // DISABLE: 'strcpy': This function or variable may be unsafe.
-#endif
-
 #include "CLuaArgument.h"
 #include <assert.h>
 #include <cstring>
@@ -28,12 +24,14 @@ using namespace std;
 
 CLuaArgument::CLuaArgument ( void )
 {
+    m_szString = NULL;
     m_iType = LUA_TNIL;
 }
 
 
 CLuaArgument::CLuaArgument ( bool bBool )
 {
+    m_szString = NULL;
     m_iType = LUA_TBOOLEAN;
     m_bBoolean = bBool;
 }
@@ -41,6 +39,7 @@ CLuaArgument::CLuaArgument ( bool bBool )
 
 CLuaArgument::CLuaArgument ( double dNumber )
 {
+    m_szString = NULL;
     m_iType = LUA_TNUMBER;
     m_Number = dNumber;
 }
@@ -51,18 +50,14 @@ CLuaArgument::CLuaArgument ( const char* szString )
     assert ( szString );
 
     m_iType = LUA_TSTRING;
-	m_strString = szString;
-}
-
-CLuaArgument::CLuaArgument ( const std::string &strString )
-{
-    m_iType = LUA_TSTRING;
-    m_strString = strString;
+    m_szString = new char [strlen ( szString ) + 1];
+    strcpy ( m_szString, szString );
 }
 
 
 CLuaArgument::CLuaArgument ( void* pUserData )
 {
+    m_szString = NULL;
     m_iType = LUA_TLIGHTUSERDATA;
     m_pLightUserData = pUserData;
 }
@@ -71,6 +66,7 @@ CLuaArgument::CLuaArgument ( void* pUserData )
 CLuaArgument::CLuaArgument ( const CLuaArgument& Argument )
 {
     // Initialize and call our = on the argument
+    m_szString = NULL;
     operator= ( Argument );
 }
 
@@ -78,20 +74,29 @@ CLuaArgument::CLuaArgument ( const CLuaArgument& Argument )
 CLuaArgument::CLuaArgument ( lua_State* luaVM, unsigned int uiArgument )
 {
     // Read the argument out of the lua VM
-    m_strString = "";
+    m_szString = NULL;
     Read ( luaVM, uiArgument );
 }
 
 
 CLuaArgument::~CLuaArgument ( void )
 {
+    // Eventually destroy our string
+    if ( m_szString )
+    {
+        delete [] m_szString;
+    }
 }
 
 
 const CLuaArgument& CLuaArgument::operator = ( const CLuaArgument& Argument )
 {
     // Destroy our old string if neccessary
-    m_strString = "";
+    if ( m_szString )
+    {
+        delete [] m_szString;
+        m_szString = NULL;
+    }
 
     // Set our variable equally to the copy class
     m_iType = Argument.m_iType;
@@ -117,7 +122,12 @@ const CLuaArgument& CLuaArgument::operator = ( const CLuaArgument& Argument )
 
         case LUA_TSTRING:
         {
-			m_strString = Argument.m_strString;
+            if ( Argument.m_szString )
+            {
+                m_szString = new char [strlen ( Argument.m_szString ) + 1];
+                strcpy ( m_szString, Argument.m_szString );
+            }
+           
             break;
         }
 
@@ -155,7 +165,17 @@ bool CLuaArgument::operator == ( const CLuaArgument& Argument )
 
         case LUA_TSTRING:
         {
-            return strcmp ( m_strString.c_str(), Argument.m_strString.c_str() ) == 0;
+            if ( m_szString )
+            {
+                if ( Argument.m_szString )
+                    return strcmp ( m_szString, Argument.m_szString ) == 0;
+                else
+                    return false;
+            }
+            else
+            {
+                return Argument.m_szString == NULL;
+            }
         }
     }
 
@@ -172,7 +192,11 @@ bool CLuaArgument::operator != ( const CLuaArgument& Argument )
 void CLuaArgument::Read ( lua_State* luaVM, unsigned int uiArgument )
 {
     // Eventually delete our previous string
-    m_strString = "";
+    if ( m_szString )
+    {
+        delete [] m_szString;
+        m_szString = NULL;
+    }
 
     // Grab the argument type
     m_iType = lua_type ( luaVM, uiArgument );
@@ -205,9 +229,12 @@ void CLuaArgument::Read ( lua_State* luaVM, unsigned int uiArgument )
             case LUA_TSTRING:
             {
                 // Grab the lua string and its size
-				size_t Len = 0;
-                const char* szLuaString = lua_tolstring ( luaVM, uiArgument, &Len );
-                m_strString.assign(szLuaString, Len);
+                const char* szLuaString = lua_tostring ( luaVM, uiArgument );
+                size_t sizeLuaString = strlen ( szLuaString );
+
+                // Allocate our buffer
+                m_szString = new char [sizeLuaString + 1];
+                strcpy ( m_szString, szLuaString );
                 break;
             }
 
@@ -256,7 +283,15 @@ void CLuaArgument::Push ( lua_State* luaVM ) const
             case LUA_TSTRING:
             {
                 // Push the string if we got any
-                lua_pushlstring ( luaVM, m_strString.data(), m_strString.size() );
+                if ( m_szString )
+                {
+                    lua_pushstring ( luaVM, m_szString );
+                }
+                else
+                {
+                    lua_pushstring ( luaVM, "" );
+                }
+
                 break;
             }
         }

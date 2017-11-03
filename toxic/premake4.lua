@@ -2,19 +2,40 @@ project "ml_toxic"
 	kind "SharedLib"
 	language "C++"
 	files {
-		"*.cpp", "*.h",
-		"luaimports/*.h",
+		"src/*.cpp", "src/*.h",
 		--"extra/*.cpp", "extra/*.h",
 		"include/*.h",
 	}
-	libdirs { "lib" }
-	links { "zlib" }
-	includedirs { ".", "include", "extra", "luaimports", "../vendor" }
+	includedirs {
+		"src",
+		"include",
+		"extra",
+		"../vendor/Selene/include",
+		--"../vendor/Selene-master/include",
+		--"../vendor/LuaGlue/include",
+	}
+	defines { "CURL_STATICLIB" }
+	pchheader "stdafx.h"
+	pchsource "src/stdafx.cpp"
+
 	targetprefix ""
-	targetdir "bin"
 	
-	configuration "windows"
-		links { "lua5.1", "ws2_32" }
+	configuration "gmake"
+		buildoptions "-std=c++11"
 	
 	configuration "linux"
-		files { "luaimports/*.cpp" }
+		links {
+			"z",
+			"curl",
+			"lua5.1",
+		}
+		--premake.gcc.cc = "gcc-4.9"
+		--premake.gcc.cxx = "g++-4.9"
+
+	configuration "windows"
+		links {
+			"ws2_32",
+			"zlib_static",
+			"libcurl",
+			"lua5.1",
+		}
