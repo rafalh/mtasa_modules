@@ -27,15 +27,11 @@ project "ml_toxic"
 		links {
 			"z",
 			"curl",
-			--"lua5.1",
 		}
-		--premake.gcc.cc = "gcc-4.9"
-		--premake.gcc.cxx = "g++-4.9"
 
 	configuration "windows"
 		links {
 			"ws2_32",
 			"zlib_static",
 			"libcurl",
-			"lua5.1",
 		}
