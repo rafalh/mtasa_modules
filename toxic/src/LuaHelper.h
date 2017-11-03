@@ -22,15 +22,15 @@ class LuaHelper
         };
 
     public:
-		LuaHelper(lua_State *luaVM) :
-			m_LuaVM(luaVM), m_Pos(1) {}
+        LuaHelper(lua_State *luaVM) :
+            m_LuaVM(luaVM), m_Pos(1) {}
         
-		template<typename T>
-		T GetGlobal(const char *Name)
-		{
-			lua_getglobal(m_LuaVM, Name);
-			return Type<T>::Get(m_LuaVM, -1);
-		}
+        template<typename T>
+        T GetGlobal(const char *Name)
+        {
+            lua_getglobal(m_LuaVM, Name);
+            return Type<T>::Get(m_LuaVM, -1);
+        }
 
         template<typename T>
         void SetGlobal(const char *Name, T Val)
@@ -61,7 +61,7 @@ class LuaHelper
         {
             lua_getglobal(m_LuaVM, FuncName);
             
-			LuaPusher<T...>::Push(m_LuaVM, Args...);
+            LuaPusher<T...>::Push(m_LuaVM, Args...);
             int iret = lua_pcall(m_LuaVM, sizeof...(Args), 0, 0);
             if (iret == LUA_ERRRUN || iret == LUA_ERRMEM)
             {
@@ -146,7 +146,7 @@ template<> struct LuaHelper::Type<bool>
     
     static bool Get(lua_State *luaVM, int Pos)
     {
-		return lua_toboolean(luaVM, Pos) != 0;
+        return lua_toboolean(luaVM, Pos) != 0;
     }
     
     static bool GetOpt(lua_State *luaVM, int Pos, bool DefVal)
@@ -154,7 +154,7 @@ template<> struct LuaHelper::Type<bool>
         if (lua_isnil(luaVM, Pos))
             return DefVal;
         else
-			return lua_toboolean(luaVM, Pos) != 0;
+            return lua_toboolean(luaVM, Pos) != 0;
     }
 };
 
@@ -182,10 +182,10 @@ template<> struct LuaHelper::Type<std::string>
 
 template<> struct LuaHelper::Type<const char*> : public LuaHelper::Type<std::string>
 {
-	static void Push(lua_State *luaVM, const char *Val)
-	{
-		lua_pushstring(luaVM, Val);
-	}
+    static void Push(lua_State *luaVM, const char *Val)
+    {
+        lua_pushstring(luaVM, Val);
+    }
 };
 
 template<typename T> struct LuaHelper::Type<T*>
@@ -197,15 +197,15 @@ template<typename T> struct LuaHelper::Type<T*>
     
     static T *Get(lua_State *luaVM, int Pos)
     {
-		return lua_touserdata(luaVM, Pos);
+        return lua_touserdata(luaVM, Pos);
     }
     
     static T *GetOpt(lua_State *luaVM, int Pos, T *DefVal)
     {
-		if (lua_islightuserdata(luaVM, Pos))
-			return lua_touserdata(luaVM, Pos);
-		else
-			return DefVal;
+        if (lua_islightuserdata(luaVM, Pos))
+            return lua_touserdata(luaVM, Pos);
+        else
+            return DefVal;
     }
 };
 

@@ -19,16 +19,16 @@ int CompressionUtils::CompressJSON(lua_State *luaVM)
     LuaHelper lua(luaVM);
     string data = lua.ReadArg<string>();
     
-	bool bStr = false, bSlash = false;
-	string strRet = "";
-	strRet.reserve(data.size());
-	
-	for (unsigned i = 0; i < data.size(); ++i)
-	{
-	    char ch = data[i];
-	    switch (ch)
-	    {
-	        case ' ':
+    bool bStr = false, bSlash = false;
+    string strRet = "";
+    strRet.reserve(data.size());
+    
+    for (unsigned i = 0; i < data.size(); ++i)
+    {
+        char ch = data[i];
+        switch (ch)
+        {
+            case ' ':
                 if(bStr || bSlash)
                     strRet += ch;
                 bSlash = false;
@@ -44,8 +44,8 @@ int CompressionUtils::CompressJSON(lua_State *luaVM)
                 break;
             default:
                 strRet += ch;
-	    }
-	}
+        }
+    }
     
     return lua.Push(strRet);
 }

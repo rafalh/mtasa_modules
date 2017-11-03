@@ -30,14 +30,14 @@ MTAEXPORT void RegisterFunctions(lua_State *luaVM)
 {
     if (!g_pModuleManager || !luaVM) return;
     
-	g_CompressionUtils.InitResource(luaVM);
-	g_FileUtils.InitResource(luaVM);
-	g_CurlBinding.InitResource(luaVM);
+    g_CompressionUtils.InitResource(luaVM);
+    g_FileUtils.InitResource(luaVM);
+    g_CurlBinding.InitResource(luaVM);
 }
 
 MTAEXPORT bool DoPulse(void)
 {
-	g_CurlBinding.Pulse();
+    g_CurlBinding.Pulse();
     return true;
 }
 
@@ -49,14 +49,14 @@ MTAEXPORT bool ShutdownModule(void)
 
 MTAEXPORT bool ResourceStopping(lua_State *luaVM)
 {
-	g_CompressionUtils.CleanupResource(luaVM);
-	g_FileUtils.CleanupResource(luaVM);
-	g_CurlBinding.CleanupResource(luaVM);
+    g_CompressionUtils.CleanupResource(luaVM);
+    g_FileUtils.CleanupResource(luaVM);
+    g_CurlBinding.CleanupResource(luaVM);
     return true;
 }
 
 MTAEXPORT bool ResourceStopped(lua_State *luaVM)
 {
-	// nothing to do
+    // nothing to do
     return true;
 }

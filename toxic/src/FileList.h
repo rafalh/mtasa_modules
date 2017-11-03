@@ -15,12 +15,12 @@ class FileList
             DIR = 1,
         };
         
-		inline FileList(const std::string &strPattern)
+        inline FileList(const std::string &strPattern)
         {
             m_hFind = FindFirstFileA(strPattern.c_str(), &m_Wfd);
         }
 
-		inline ~FileList()
+        inline ~FileList()
         {
             if(m_hFind != INVALID_HANDLE_VALUE)
                 FindClose(m_hFind);
@@ -61,7 +61,7 @@ class FileList
 class FileList
 {
     public:
-		 enum
+         enum
         {
             FILE = 0,
             DIR = 1,
