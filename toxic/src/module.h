@@ -7,7 +7,7 @@
 #define MODULE_AUTHOR       "rafalh"
 #define MODULE_VERSION      1.2f
 
-#ifdef WIN32
+#ifdef _WIN32
     #define MTAEXPORT extern "C" __declspec(dllexport)
 #else
     #define MTAEXPORT extern "C"
