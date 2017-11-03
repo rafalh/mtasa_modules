@@ -1,7 +1,0 @@
-sockets
--------
-https://github.com/multitheftauto/multitheftauto-modules/tree/master/sockets
-
-curl
-----
-Instniejące rozszerzenie curl używa funkcji blokujących. Nasze jest asynchroniczne.

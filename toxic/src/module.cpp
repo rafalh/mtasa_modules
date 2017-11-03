@@ -3,6 +3,7 @@
 #include "CompressionUtils.h"
 #include "FileUtils.h"
 #include "CurlBinding.h"
+#include "luaimports.h"
 
 ILuaModuleManager10 *g_pModuleManager = NULL;
 
@@ -14,13 +15,13 @@ CurlBinding g_CurlBinding;
 MTAEXPORT bool InitModule(ILuaModuleManager10 *pManager, char *szModuleName, char *szAuthor, float *fVersion)
 {
     g_pModuleManager = pManager;
-    
     // Set the module info
     strncpy(szModuleName, MODULE_NAME, MAX_INFO_LENGTH);
     strncpy(szAuthor, MODULE_AUTHOR, MAX_INFO_LENGTH);
     (*fVersion) = MODULE_VERSION;
     
-    //ImportLua();
+    if (!ImportLua())
+        return false;
     
     return true;
 }
@@ -42,6 +43,7 @@ MTAEXPORT bool DoPulse(void)
 
 MTAEXPORT bool ShutdownModule(void)
 {
+    // nothing to do
     return true;
 }
 
@@ -55,6 +57,6 @@ MTAEXPORT bool ResourceStopping(lua_State *luaVM)
 
 MTAEXPORT bool ResourceStopped(lua_State *luaVM)
 {
-	// nothing to do for now
+	// nothing to do
     return true;
 }

@@ -1,0 +1,4 @@
+<meta>
+	<info author="rafalh" name="Test" type="script" />
+	<script src="server.lua" type="server" />
+</meta>

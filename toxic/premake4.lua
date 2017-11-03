@@ -4,15 +4,15 @@ project "ml_toxic"
 	files {
 		"src/*.cpp", "src/*.h",
 		--"extra/*.cpp", "extra/*.h",
+		"luaimports/*.cpp", "luaimports/*.h",
 		"include/*.h",
 	}
 	includedirs {
 		"src",
 		"include",
-		"extra",
-		"../vendor/Selene/include",
-		--"../vendor/Selene-master/include",
-		--"../vendor/LuaGlue/include",
+		--"extra",
+		"luaimports",
+		--"../vendor/Selene/include",
 	}
 	defines { "CURL_STATICLIB" }
 	pchheader "stdafx.h"
@@ -21,13 +21,13 @@ project "ml_toxic"
 	targetprefix ""
 	
 	configuration "gmake"
-		buildoptions "-std=c++11"
+		buildoptions "-std=c++11 -fPIC"
 	
 	configuration "linux"
 		links {
 			"z",
 			"curl",
-			"lua5.1",
+			--"lua5.1",
 		}
 		--premake.gcc.cc = "gcc-4.9"
 		--premake.gcc.cxx = "g++-4.9"

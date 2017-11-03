@@ -2,6 +2,7 @@ dist
 bin
 obj
 Makefile
+premake-build
 
 *.a
 *.lib

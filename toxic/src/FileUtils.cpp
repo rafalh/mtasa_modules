@@ -42,9 +42,8 @@ int FileUtils::FileFind(lua_State *luaVM)
 	//g_pModuleManager->Printf("Find %s %u %u\n", strPattern.c_str(), bFiles, bDirs);
 
 	lua_newtable(luaVM);
-	unsigned i = 0;
-
 	FileList List(strPattern);
+	unsigned i = 0;
 	while (true)
 	{
 		string strName;
@@ -61,7 +60,6 @@ int FileUtils::FileFind(lua_State *luaVM)
 			++i;
 		}
 	}
-
 	return 1;
 }
 
