@@ -21,7 +21,6 @@ RUN tar xf baseconfig.tar.gz && \
     sed -i "/<\/config>/ s/.*/<module src="ml_toxic.so"\/>\n&/" multitheftauto_linux/mods/deathmatch/mtaserver.conf && \
     sed -i "/<\/config>/ s/.*/<resource src="test" startup="1" protected="0"\/>\n&/" multitheftauto_linux/mods/deathmatch/mtaserver.conf
 
-VOLUME /mnt
 EXPOSE 22003 22005
 VOLUME /multitheftauto_linux/mods/deatchmatch/modules
 VOLUME /multitheftauto_linux/mods/deatchmatch/resources

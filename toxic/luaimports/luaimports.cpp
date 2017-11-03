@@ -216,7 +216,7 @@ extern "C"
 #endif
 bool ImportLua()
 {
-#ifdef ANY_x64
+#ifdef __x86_64__
   void* dl = dlopen("x64/deathmatch.so", RTLD_NOW | RTLD_NOLOAD);
 #else
   void* dl = dlopen("mods/deathmatch/deathmatch.so", RTLD_NOW | RTLD_NOLOAD);

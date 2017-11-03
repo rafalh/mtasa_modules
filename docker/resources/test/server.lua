@@ -18,6 +18,8 @@ function assertTrue(val)
 	end
 end
 
+outputDebugString("==== TEST BEGIN ====")
+
 -- compressJSON test
 local tbl = {
 	{ foo = 'bar' },
@@ -42,3 +44,5 @@ assertEq(curlEscape(curl, 'abc '), 'abc%20')
 assertEq(curlSetopt(curl, 'CURLOPT_TIMEOUT', 30), true)
 assertEq(curlPerform(curl), true)
 assertEq(curlClose(curl), true)
+
+outputDebugString("==== TEST END ====")

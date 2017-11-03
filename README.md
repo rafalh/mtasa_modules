@@ -6,13 +6,15 @@ Building
 
 Build module in Docker container:
 
-	cd docker
+	cd docker/x86
 	./build-img.sh
 	./make.sh
 
 Test module:
 
 	./run.sh
+
+If you want to build for x86_64 architecture use docker/x64 directory.
 
 Useful modules
 --------------
