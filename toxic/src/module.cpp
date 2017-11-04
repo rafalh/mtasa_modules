@@ -19,7 +19,13 @@ MTAEXPORT bool InitModule(ILuaModuleManager10 *pManager, char *szModuleName, cha
     strncpy(szModuleName, MODULE_NAME, MAX_INFO_LENGTH);
     strncpy(szAuthor, MODULE_AUTHOR, MAX_INFO_LENGTH);
     (*fVersion) = MODULE_VERSION;
-    
+
+    if (g_pModuleManager->GetVersion() < 0x154)
+    {
+        g_pModuleManager->ErrorPrintf("[ml_toxic] Minimal supported MTA version is 1.5.4\n");
+        return false;
+    }
+
     if (!ImportLua())
         return false;
     
