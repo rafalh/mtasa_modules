@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "module.h"
 #include "CompressionUtils.h"
-#include "FileList.h"
-#include "ResourcePathCache.h"
 #include "LuaHelper.h"
 
 using namespace std;

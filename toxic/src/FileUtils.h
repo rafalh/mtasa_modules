@@ -1,7 +1,6 @@
 #pragma once
 
 #include "stdafx.h"
-#include "ResourcePathCache.h"
 
 class FileUtils
 {
@@ -13,5 +12,5 @@ public:
     static int FileModTime(lua_State *luaVM);
 
 private:
-    static ResourcePathCache m_ResPathCache;
+    static bool ParseResPath(lua_State *luaVM, const std::string &strPath, std::string &strRet);
 };

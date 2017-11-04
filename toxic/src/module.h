@@ -5,7 +5,7 @@
 /** MODULE SPECIFIC INFORMATION **/
 #define MODULE_NAME         "Toxic Module"
 #define MODULE_AUTHOR       "rafalh"
-#define MODULE_VERSION      1.2f
+#define MODULE_VERSION      1.21f
 
 #ifdef _WIN32
     #define MTAEXPORT extern "C" __declspec(dllexport)
